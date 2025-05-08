@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>PowerMall</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>pm-iaas</module>
+        <module>pm-business</module>
+        <module>pm-common</module>
+    </modules>
+    <packaging>pom</packaging>
+
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
+        <spring-boot-version>2.3.12.RELEASE</spring-boot-version>
+        <!--做版本控制的标签名可以随便起，在dependencyManagement引用就好了-->
+        <httpclient.version>4.5.14</httpclient.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springfox-swagger2-ui.version>2.9.2</springfox-swagger2-ui.version>
+    </properties>
+
+    <dependencies>
+
+        <!--Springsecurity 的依赖-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+        </dependency>
+
+
+        <!--jdbc的依赖-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>-->
+        <!--注意这里用的是jdbc版本的依赖要跟springboot匹配-->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+        </dependency>
+
+        <!---->
+        <dependency>
+            <groupId>com.oracle.database.nls</groupId>
+            <artifactId>orai18n</artifactId>
+            <version>23.5.0.24.07</version>
+        </dependency>
+
+        <!--redis的依赖-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>-->
+
+        <!--验证码工具kaptcha的依赖-->
+        <!--<dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>-->
+
+        <!--pinyin4j的依赖(将汉字转成拼音的工具)-->
+        <!--<dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
+        </dependency>-->
+
+
+        <!--openfegin的依赖-->
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>-->
+
+        <!--AOP依赖-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>-->
+
+        <!--springboot,web的相关依赖启动器-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>-->
+
+        <!--nacos作为文件配置中心的依赖-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- 添加 nacos 的依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!--lombok依赖-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.4</version>
+        </dependency>-->
+
+        <!--fastjson的依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.79</version>
+        </dependency>
+
+        <!--JSR-303的依赖(数据校验)-->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.2.0.Final</version>
+        </dependency>
+
+        <!--jwt的依赖-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
+        <!--thymeleaf的依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!--junit依赖-->
+        <dependency>
+            <groupId>name.remal.tools.test</groupId>
+            <artifactId>junit5</artifactId>
+            <version>1.26.147</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <!--作用1：用来做版本控制-->
+    <!--作用2：在dependencyManagement标签是申明式的依赖，申明过的依赖，想要使用需要在dependency标签内再申明下-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 添加 alibaba 的依赖管理 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!---->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--httpclient依赖-->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+
+            <!--Swagger依赖-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <!--Swagger UI-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger-ui.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>
