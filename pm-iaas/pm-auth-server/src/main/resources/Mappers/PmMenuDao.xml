@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmMenuDao">
+
+    <select id="GetAllPerms_byuserid" resultType="String">
+        select distinct c.perms  from
+        pm_sys_user_role a,pm_sys_role_menu b,pm_sys_menu c
+        where a.role_id = #{userid}
+        and a.role_id = b.role_id
+        and b.menu_id = c.menu_id
+        and c.perms is not null
+    </select>
+
+</mapper>
