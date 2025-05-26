@@ -7,10 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pm-common-base" />
         <module name="pm-auth-server" />
-        <module name="pm-common-core" />
         <module name="pm-common-untils" />
+        <module name="pm-business-manager-server" />
+        <module name="pm-business-test" />
+        <module name="pm-common-base" />
+        <module name="pm-common-core" />
+        <module name="pm-business-member-service" />
         <module name="pm-gateway-server" />
       </profile>
     </annotationProcessing>

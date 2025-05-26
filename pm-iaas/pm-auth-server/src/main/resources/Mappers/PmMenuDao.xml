@@ -12,6 +12,7 @@
         and a.role_id = b.role_id
         and b.menu_id = c.menu_id
         and c.perms is not null
+        and c.pm_type = 2
     </select>
 
 </mapper>

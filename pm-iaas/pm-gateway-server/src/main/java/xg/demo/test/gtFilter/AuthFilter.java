@@ -26,7 +26,7 @@ import java.util.HashMap;
 
  **/
 
-//@Component
+@Component
 @Slf4j
 public class AuthFilter implements GlobalFilter, Ordered {
     @Autowired

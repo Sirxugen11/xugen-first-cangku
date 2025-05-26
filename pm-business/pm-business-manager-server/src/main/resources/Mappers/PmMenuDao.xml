@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmMenuDao">
+
+    <!--根据userid查询对应角色所拥有的菜单权限的方法-->
+    <select id="GetAllPmMenusByUserid" resultType="xg.demo.test.Pojo.PmMenu">
+        select distinct a.menu_id,a.parent_id,a.pm_name as name,a.pm_url as url,a.perms,a.pm_type as type,a.icon,a.order_num  from pm_sys_menu a,pm_sys_user_role b,pm_sys_role_menu c
+        where b.user_id = #{userid}
+        and b.role_id = c.role_id
+        and c.menu_id = a.menu_id
+        and (a.pm_type = 0 or a.pm_type = 1)
+    </select>
+
+    <!--查询系统所有权限集合-->
+    <select id="GetAllPmMenus" resultType="xg.demo.test.Pojo.PmMenu">
+        select a.pm_name as name,a.pm_url as url,a.pm_type as type,a.* from pm_sys_menu a
+    </select>
+
+    <!--新增菜单权限的方法-->
+    <insert id="InsertPmMenu">
+        insert into pm_sys_menu a values( Auto_up_pm_menuid.Nextval,
+        #{pmmenu.parentId},#{pmmenu.name},'','',#{pmmenu.type},#{pmmenu.icon},
+        #{pmmenu.orderNum}
+        )
+    </insert>
+
+    <!--根据菜单id获取菜单权限信息的方法-->
+    <select id="GetPmMenuByMenuid" resultType="xg.demo.test.Pojo.PmMenu">
+        select a.pm_name as name,a.pm_url as url,a.pm_type as type,a.* from pm_sys_menu a
+        where a.menu_id = #{menuid}
+    </select>
+
+    <!--修改更新PmMenu表的方法-->
+    <update id="UpdatePmMenu">
+        update pm_sys_menu a set
+        <if test="pmMenu.parentId != null">
+            a.parent_id = #{pmMenu.parentId}
+        </if>
+        <if test="pmMenu.name != null and pmMenu.name != ''">
+            ,a.pm_name = #{pmMenu.name}
+        </if>
+        <if test="pmMenu.url != null and pmMenu.url != ''">
+            ,a.pm_url = #{pmMenu.url}
+        </if>
+        <if test="pmMenu.perms != null and pmMenu.perms != ''">
+            ,a.perms = #{pmMenu.perms}
+        </if>
+        <if test="pmMenu.type != null">
+            ,a.pm_type = #{pmMenu.type}
+        </if>
+        <if test="pmMenu.icon != null and pmMenu.icon != ''">
+            ,a.icon = #{pmMenu.icon}
+        </if>
+        <if test="pmMenu.orderNum != null">
+            ,a.order_num = #{pmMenu.orderNum}
+        </if>
+        where a.menu_id = #{pmMenu.menuId}
+    </update>
+
+    <!--通过menu_id，查询它有多少条子菜单的方法-->
+    <select id="GetSonPmMenuBymenuid" resultType="integer">
+        select count(*) from pm_sys_menu a where a.parent_id = #{menuid}
+    </select>
+
+    <!--根据menu_id，删除菜单权限数据的方法-->
+    <delete id="DeleteByMenuid">
+        delete from pm_sys_menu a where a.menu_id = #{menuid}
+    </delete>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmLogDao">
+
+    <!--查询符合查询条件的数据总数-->
+    <select id="GetCounts" resultType="integer">
+        select count(*) from pm_sys_log a
+        <where>
+            <if test="userid != null and userid != 0">
+                a.user_id = #{userid}
+            </if>
+            <if test="operation != null and operation != ''">
+                and a.operation like concat(concat('%',#{operation}),'%')
+            </if>
+        </where>
+    </select>
+
+    <!--根据分页条件，进行分页查询，并返回PmPage对象的方法-->
+    <select id="GetPmLogsByPage" resultType="xg.demo.test.Pojo.PmLog">
+        select a.pmlog_id as id,pm_time as time,a.* from view_pm_sys_log a
+        where a.rownums > ((#{page.current} - 1) * #{page.size})
+        and a.rownums &lt;=(#{page.current} * #{page.size})
+            <if test="userid != null and userid != 0">
+                and a.user_id = #{userid}
+            </if>
+            <if test="operation != null and operation != ''">
+                and a.operation like concat(concat('%',#{operation}),'%')
+            </if>
+
+    </select>
+
+</mapper>

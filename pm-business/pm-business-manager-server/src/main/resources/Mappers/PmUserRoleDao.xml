@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmUserRoleDao">
+    <!--新增数据的方法-->
+    <insert id="InsertBylist">
+        begin
+        <foreach collection="roleidlist" item="roleid">
+            insert into pm_sys_user_role values(Auto_up_pm_userroleid.Nextval,#{userid},#{roleid});
+        </foreach>
+        end;
+    </insert>
+
+    <!--根据用户id清除，用户对应角色的方法-->
+    <delete id="CleanByuserid">
+        delete from pm_sys_user_role a where a.user_id = #{userid}
+    </delete>
+
+    <!--根据角色id,清除用户角色表数据-->
+    <delete id="CleanByroleid">
+        delete from pm_sys_user_role a where a.role_id in
+        <foreach collection="list" open="(" close=")" separator="," item="roleid">
+            #{roleid}
+        </foreach>
+    </delete>
+
+    <!--根据用户id,查询用户所拥有的角色id集合-->
+    <select id="GetAllRoleidByUserid" resultType="integer">
+        select role_id from pm_sys_user_role where user_id = #{userid}
+    </select>
+
+
+</mapper>

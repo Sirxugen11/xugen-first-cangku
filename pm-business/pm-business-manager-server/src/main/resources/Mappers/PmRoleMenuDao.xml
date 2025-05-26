@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmRoleMenuDao">
+
+    <!--新增数据的方法-->
+    <insert id="InsertBylist">
+        begin
+        <foreach collection="list" item="menuid">
+            insert into pm_sys_role_menu a values(Auto_up_pm_rolemenuid.Nextval,#{roleid},#{menuid});
+        </foreach>
+        end;
+    </insert>
+
+    <!--根据roleid查询对应角色所有菜单权限id的方法-->
+    <select id="GetMenuidsByRoleid" resultType="integer">
+        select menu_id from pm_sys_role_menu where role_id = #{roleid}
+    </select>
+
+    <!--根绝roleid清除，角色对应菜单权限的方法-->
+    <delete id="CleanByRoleid">
+        delete from pm_sys_role_menu a where a.role_id = #{roleid}
+    </delete>
+
+    <!--根据menuid清除，角色对应菜单权限的方法-->
+    <delete id="CleanByMenuid">
+        delete from pm_sys_role_menu a where a.menu_id = #{menuid}
+    </delete>
+
+
+
+</mapper>

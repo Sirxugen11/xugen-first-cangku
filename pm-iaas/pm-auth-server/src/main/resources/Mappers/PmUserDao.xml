@@ -6,7 +6,9 @@
 <mapper namespace="xg.demo.test.Dao.PmUserDao">
 
     <select id="GetPmUser_byusername" resultType="xg.demo.test.Pojo.PmUser">
-        select * from pm_sys_user a where a.username = #{username}
+        select a.user_id,a.username,a.pm_password as password,a.email,a.mobile,a.status,a.create_user_id,a.create_time,a.shop_id from
+        pm_sys_user a
+        where a.username = #{username}
     </select>
 
 </mapper>

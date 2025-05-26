@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import xg.demo.test.Enum.CodeEnum;
+import xg.demo.test.Expection.BusinessExecption;
 import xg.demo.test.Expection.ServerExecption;
 import xg.demo.test.Pojo.PmResult;
 
@@ -16,6 +17,20 @@ public class ExceptionController_one {
     @ExceptionHandler(ServerExecption.class)
     public PmResult ExceptionHandler1(ServerExecption e){
         //获取异常的信息
+        String message = e.getMessage();
+        if(StringUtils.hasText(message)) {
+            //如果异常有异常信息，就返回本身的异常信息
+            return PmResult.error(CodeEnum.code_server_error.getCode(), message);
+        }else {
+            //如果异常没有异常信息，就返回默认的异常数据
+            return PmResult.error(CodeEnum.code_server_error);
+        }
+    }
+
+    //
+    @ExceptionHandler(BusinessExecption.class)
+    public PmResult BusinessExecptionHandler(BusinessExecption e){
+        System.out.println("BusinessExecptionHandler开始执行：");
         String message = e.getMessage();
         if(StringUtils.hasText(message)) {
             //如果异常有异常信息，就返回本身的异常信息

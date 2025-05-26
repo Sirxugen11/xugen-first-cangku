@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmRoleDao">
+    <!--查询所有角色的方法-->
+    <select id="GetAllPmrole" resultType="xg.demo.test.Pojo.PmRole">
+        select * from pm_sys_role
+    </select>
+
+    <!--获取分页查询的数据数-->
+    <select id="GetPmRoleCounts" resultType="integer">
+        select count(*) from pm_sys_role a
+        <where>
+            <if test="rolename != null and rolename != ''">
+                a.role_name like concat(concat('%',#{rolename}),'%')
+            </if>
+        </where>
+    </select>
+
+    <!--分页查询角色的方法-->
+    <select id="GetPmRolePage" resultType="xg.demo.test.Pojo.PmRole">
+        select * from (select rownum as rownums,a.* from pm_sys_role a) b
+        where b.rownums > ((#{page.current} - 1) * #{page.size})
+        and b.rownums &lt;=(#{page.current} * #{page.size})
+        <if test="rolename != null and rolename != ''">
+            and b.role_name like concat(concat('%',#{rolename}),'%')
+        </if>
+    </select>
+
+    <!--新增角色的方法-->
+    <insert id="SavePmRole">
+        insert into pm_sys_role a values(Auto_up_pm_roleid.Nextval,#{pmrole.roleName},#{pmrole.remark},
+        1,to_char(sysdate,'YYYY-MM-DD hh:mm:ss')
+        )
+    </insert>
+
+    <!--根据角色姓名查询角色id的方法-->
+    <select id="GetroleidByRolename" resultType="integer">
+        select a.role_id from pm_sys_role a where a.role_name = #{rolename}
+    </select>
+
+    <!--根据roleid查询角色信息的方法-->
+    <select id="GetPmRoleByid" resultType="xg.demo.test.Pojo.PmRole">
+        select * from pm_sys_role a where a.role_id = #{roleid}
+    </select>
+
+    <!--更新角色的方法-->
+    <update id="UpdatePmRole">
+        update pm_sys_role a set
+        <if test="pmrole.roleName != null and pmrole.roleName !=''">
+            a.role_name = #{pmrole.roleName}
+        </if>
+        <if test="pmrole.remark != null and pmrole.remark !=''">
+            ,a.remark = #{pmrole.remark}
+        </if>
+        where a.role_id = #{pmrole.roleId}
+
+    </update>
+
+    <!--批量或单个删除角色的方法-->
+    <delete id="DeleteByRoleidlist">
+        delete from pm_sys_role a where a.role_id in
+        <foreach collection="list" open="(" close=")" separator="," item="roleid">
+            #{roleid}
+        </foreach>
+    </delete>
+</mapper>

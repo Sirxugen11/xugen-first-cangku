@@ -3,8 +3,9 @@ package xg.demo.test.Enum;
 public enum CodeEnum {
     code_error(-1,"操作失败！"),
     code_ok(200,"操作成功！"),
-    code_server_error(10000,"业务有错误！请检查业务流程及其数据是否正确！");
-
+    code_server_error(10000,"业务有错误！请检查业务流程及其数据是否正确！"),
+    code_quanxian_error(10001,"权限不够！"),
+    code_token_error(10086,"没有token获取token过期了！");
     private Integer code;
     private String message;
 

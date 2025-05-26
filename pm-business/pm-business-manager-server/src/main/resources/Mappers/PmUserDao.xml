@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="xg.demo.test.Dao.PmUserDao">
+    <!--分页查询-->
+    <select id="GetPmUserPage" resultType="xg.demo.test.Pojo.PmUser">
+        select * from (select rownum as rowsnum,a. * from pm_sys_user a) b
+        where b.rowsnum > ((#{page.current} - 1) * #{page.size})
+        and b.rowsnum &lt;=(#{page.current} * #{page.size})
+        <if test="username != null and username != ''">
+            and b.username like concat(concat('%',#{username}),'%')
+        </if>
+    </select>
+    <!--获取分页查询的数据数-->
+    <select id="GetCountByusername" resultType="integer">
+        select count(*) from pm_sys_user a
+        <where>
+            <if test="username != null and username != ''">
+                a.username like concat(concat('%',#{username}),'%')
+            </if>
+        </where>
+    </select>
+
+    <!--新增用户-->
+    <insert id="InsertPmuser">
+        insert into pm_sys_user values(
+        Auto_up_pm_userid.Nextval,#{pmuser.username},#{pmuser.password},
+        #{pmuser.email},#{pmuser.mobile},#{pmuser.status},
+        1,sysdate,1
+        )
+    </insert>
+
+    <!--根据用户名查询用户id-->
+    <select id="GetUseridByUsername" resultType="integer">
+        select a.user_id from pm_sys_user a where a.username = #{username}
+    </select>
+
+    <!--修改用户信息的方法-->
+    <update id="UpdatePmuserInfo">
+        update pm_sys_user a set
+        <if test="pmuser.username != null and pmuser.username != ''">
+            a.username = #{pmuser.username}
+        </if>
+        <if test="pmuser.password != null and pmuser.password != ''">
+            ,a.pm_password = #{pmuser.password}
+        </if>
+        <if test="pmuser.email != null and pmuser.email != ''">
+            ,a.email = #{pmuser.email}
+        </if>
+        <if test="pmuser.mobile != null and pmuser.mobile != ''">
+            ,a.mobile = #{pmuser.mobile}
+        </if>
+        <if test="pmuser.status != null">
+            ,a.status = #{pmuser.status}
+        </if>
+        where a.user_id = #{pmuser.userId}
+    </update>
+
+    <!--批量或者单个，删除用户的api-->
+    <delete id="DeletePmusersByUseridlist">
+        delete from pm_sys_user a where a.user_id in
+        <if test="useridlist != null and useridlist.size > 0">
+            <foreach collection="useridlist" open="(" close=")" separator="," item="userid">
+                #{userid}
+            </foreach>
+        </if>
+    </delete>
+
+    <!--根据userid查询用户信息-->
+    <select id="GetPmUserByuserid" resultType="xg.demo.test.Pojo.PmUser">
+        select a.pm_password as password ,a.* from pm_sys_user a where a.user_id = #{userid}
+    </select>
+</mapper>

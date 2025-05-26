@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import xg.demo.test.Constant.AuthConstant;
 import xg.demo.test.Factory.LoginStrategyFactory;
 import xg.demo.test.Strategy.LoginStrategy;
-import xg.demo.test.authpojo.LoginSecurityUserr;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,19 +25,20 @@ public class PmUserDetailsService implements UserDetailsService {
     //这里的参数的username是springsercuity前端登录表单输入的username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         //System.out.println(username);
         // 获取请求对象
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         // 从请求头中获取登录类型
-        String loginType = request.getHeader("loginType");
+        String loginType = request.getHeader(AuthConstant.LOGIN_TYPE);
         // 判断请求来自于哪个系统
         /*if (AuthConstants.SYS_USER_LOGIN.equals(loginType)) {
             // 商城后台管理系统流程
         } else {
             // 商城用户购物系统流程
         }*/
-        //loginType = "pcLoginStrategy";
+        //loginType = "pcLoginStrategy";  ////////////////////////////////////////////
         if (!StringUtils.hasText(loginType)) {
             throw new InternalAuthenticationServiceException("非法登录，登录类型不匹配");
         }

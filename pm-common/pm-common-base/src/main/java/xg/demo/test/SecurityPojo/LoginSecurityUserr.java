@@ -1,6 +1,5 @@
-package xg.demo.test.authpojo;
+package xg.demo.test.SecurityPojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import xg.demo.test.Pojo.PmUser;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 //用户认证对象
+/*其他服务也会用到这个给他放到公共的地方去*/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +28,11 @@ public class LoginSecurityUserr implements UserDetails {
     private Date createtime;
     private String shopid;*/
 
+    //
     private PmUser pmUser;
+
+    // 商城购物系统会员的相关属性
+    private String openid;
     //权限
     //注意权限可能会有重复的情况，所以这里不用list而用set集合
     private Set<String> perms;
@@ -40,7 +46,7 @@ public class LoginSecurityUserr implements UserDetails {
     @Override
     public String getPassword() {
 
-        return this.pmUser.getPmpassword();
+        return this.pmUser.getPassword();
     }
 
     @Override

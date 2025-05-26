@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pm-business</artifactId>
+    <modules>
+        <module>pm-business-test</module>
+        <module>pm-business-manager-server</module>
+        <module>pm-business-member-service</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
